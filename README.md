@@ -1,10 +1,10 @@
-## Sensor Simulation Distributed System
+# Sensor Simulation Distributed System
 
-# Scenario
+## Scenario
 
 We have been requested to have multiple sensors in multiple cities collecting velocity samples in hihgways. Velocity values may vary between **0 km/h** and **270 km/h**, and each sample comes with the **sensor ID**, the **city** and the **date**. The values collected should be held in a log file, before being published to the servers that will provide a **User Application** with a fair ammount of possible queries, like the highest velocity ever registered or the average velocity in a certain city.
 
-# Implementation
+## Implementation
 
 We will use RabbitMQ to create two queues binded to an exchange. One queue will serve the purpose of logging the velocity samples, and the other will make the samples available for a subsequent level of our system. The sensors will publish the sample to the exchange, which, in turn, will redirect them to the queues.
 
@@ -14,3 +14,4 @@ Inside the **Event Processing Group**, there will be a leader consumer, whose ad
 
 Here is an illustration of the system described:
 
+![CD Final Project drawio](https://user-images.githubusercontent.com/75852333/148568308-33dc4d7a-711d-49cb-96b8-9876b6de591d.png)
