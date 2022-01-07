@@ -1,0 +1,42 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+option java_multiple_files = true;
+option java_package = "velocity";
+
+package forum;
+
+service Velocity {
+    rpc queryHighestVelocity(google.protobuf.Empty) returns (Sample);
+    rpc queryLowestVelocity(google.protobuf.Empty) returns (Sample);
+    rpc queryVelocitiesInCity(City) returns (Answer);
+    rpc queryVelocitiesInDate(Date) returns (Answer);
+    rpc queryAverageVelocityInCity(City) returns (Value);
+    rpc queryAverageVelocityInDate(Date) returns (Value);
+    rpc queryNumberOfConsumers(google.protobuf.Empty) returns (Value);
+    rpc requestNewConsumer(google.protobuf.Empty) returns (google.protobuf.Empty);
+}
+
+message City {
+    string city = 1;
+}
+
+message Date {
+    string date = 1;
+}
+
+message Value {
+    int32 value = 7;
+}
+
+message Answer {
+    repeated Sample samples = 2;
+}
+
+message Sample {
+    string sid = 3;
+    string city = 4;
+    string date = 5;
+    int32 velocity = 6;
+}
+

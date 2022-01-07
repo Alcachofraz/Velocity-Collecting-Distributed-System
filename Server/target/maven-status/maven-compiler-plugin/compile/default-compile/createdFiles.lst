@@ -1,0 +1,6 @@
+server\ServerUser.class
+server\GroupMember.class
+server\MessageHandling.class
+server\VelocitySample.class
+server\Server.class
+server\PrintMessages.class
