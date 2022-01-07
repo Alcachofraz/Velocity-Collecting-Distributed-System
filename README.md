@@ -24,30 +24,30 @@ Follow the instructions in the PDF **Spread Install Instructions in VM GCP CentO
 
 ### 2) Install RabbitMQ
 
-Please, refer to [this](https://docs.docker.com/engine/install/centos/) link. Use the following commands:
-• sudo yum install -y yum-utils
-• sudo yum-config-manager --add-repo \
-https://download.docker.com/linux/centos/docker-ce.repo
-• sudo yum install docker-ce docker-ce-cli containerd.io
-• sudo systemctl start docker
-• sudo docker run hello-world
+Please, refer to [this](https://docs.docker.com/engine/install/centos/) link. Use the following commands:  
+• sudo yum install -y yum-utils  
+• sudo yum-config-manager --add-repo \  
+https://download.docker.com/linux/centos/docker-ce.repo  
+• sudo yum install docker-ce docker-ce-cli containerd.io  
+• sudo systemctl start docker  
+• sudo docker run hello-world  
 
-To avoid using 'sudo' when interacting with RabbitMQ, use:
-• sudo usermod -aG docker $USER
-• sudo newgrp docker
+To avoid using 'sudo' when interacting with RabbitMQ, use:  
+• sudo usermod -aG docker $USER  
+• sudo newgrp docker  
 
-To run:
-• docker run fedora cat /etc/os-release
-• docker run -d --hostname rabbithost --name rabbitmg \
--p 5672:5672 -p 15672:15672 rabbitmq:management
+To run:  
+• docker run fedora cat /etc/os-release  
+• docker run -d --hostname rabbithost --name rabbitmg \  
+-p 5672:5672 -p 15672:15672 rabbitmq:management  
 
 You can use http://<public VM IP>:15672 to use the RabbitMQ interface. Use guest/guest to log in.
 
-### 3) Start Spread
+### 3) Start Spread  
 
-Use the following command:
-• spread -c /usr/local/etc/newspread.conf
+Use the following command:  
+• spread -c /usr/local/etc/newspread.conf  
 
-### 4) Launch Server.jar
+### 4) Launch Server.jar  
 
 
