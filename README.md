@@ -50,4 +50,20 @@ Use the following command:
 
 ### 4) Launch Server.jar  
 
+Use the following command:  
+• java -jar Server.jar --daemon-endpoint=<daemon_ip>:<daemon_port> --port=<server_port>  
 
+### 5) Launch Consumer.jar  
+
+Use the following command:  
+• java -jar Consumer.jar --daemon-endpoint=<daemon_ip>:<daemon_port> --broker-endpoint=<broker_ip>:<broker_port>  
+
+### 6) Launch Sensor.jar  
+
+Use the following command:  
+• java -jar Sensor.jar --broker-endpoint=<broker_ip>:<broker_port> --sid=<sensor_id> --city=<city> --minus-day=<days_to_subtract>  
+
+### 7) Launch User.jar  
+
+Use the following command:  
+• java -jar User.jar --endpoint=<server_ip>:<server_port>  
