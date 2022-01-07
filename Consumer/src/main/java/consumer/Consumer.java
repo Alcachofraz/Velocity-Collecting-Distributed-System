@@ -6,17 +6,17 @@ import spread.SpreadException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Consumer {
 
-    static final String BROKER_IP = "35.197.234.138";
-    static final int BROKER_PORT = 5672;
+    static String BROKER_IP = "35.197.234.138";
+    static int BROKER_PORT = 5672;
     static final String QUEUE_NAME = "VELOCITY_QUEUE";
     private static final String EXCHANGE_NAME = "VELOCITY_SAMPLES";
     private static final String ROUTING_KEY = "VELOCITY_SAMPLES";
 
-    //private static String DAEMON_IP = "34.89.88.166";
     private static String DAEMON_IP = "35.197.234.138";
     private static int DAEMON_PORT = 4803;
     public static final String EVENT_PROCESSING_GROUP_NAME = "EVENT_PROCESSING_GROUP";
@@ -24,12 +24,18 @@ public class Consumer {
     public static GroupMember member;
 
     public static void main(String[] args) {
-        if (args.length > 0) {
-            DAEMON_IP = args[0];
+        HashMap<String, String> keyValueArgs = convertToKeyValuePair(args);
+        String daemonEndpoint;
+        String brokerEndpoint;
+        if ((daemonEndpoint = keyValueArgs.get("daemon-endpoint")) != null) {
+            DAEMON_IP = daemonEndpoint.substring(0, daemonEndpoint.indexOf(":"));
+            DAEMON_PORT = Integer.parseInt(daemonEndpoint.substring(daemonEndpoint.indexOf(":") + 1));
         }
-        if (args.length > 1) {
-            DAEMON_PORT = Integer.parseInt(args[1]);
+        if ((brokerEndpoint = keyValueArgs.get("broker-endpoint")) != null) {
+            BROKER_IP = brokerEndpoint.substring(0, brokerEndpoint.indexOf(":"));
+            BROKER_PORT = Integer.parseInt(brokerEndpoint.substring(brokerEndpoint.indexOf(":") + 1));
         }
+
         try {
             //
             // RABBITMQ:
@@ -96,6 +102,20 @@ public class Consumer {
     private static String readLine() {
         Scanner scanInput = new Scanner(System.in);
         return scanInput.nextLine();
+    }
+
+    private static HashMap<String, String> convertToKeyValuePair(String[] args) {
+        HashMap<String, String> params = new HashMap<>();
+
+        for (String arg: args) {
+            String[] splitFromEqual = arg.split("=");
+
+            String key = splitFromEqual[0].substring(2);
+            String value = splitFromEqual[1];
+
+            params.put(key, value);
+        }
+        return params;
     }
 }
 

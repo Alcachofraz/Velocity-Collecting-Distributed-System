@@ -4,6 +4,7 @@ import com.rabbitmq.client.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
@@ -12,8 +13,8 @@ import java.util.concurrent.TimeUnit;
 
 public class Sensor {
 
-    private static final String BROKER_IP = "35.197.234.138";
-    private static final int BROKER_PORT = 5672;
+    private static String BROKER_IP = "35.197.234.138";
+    private static int BROKER_PORT = 5672;
     private static final String EXCHANGE_NAME = "VELOCITY_SAMPLES";
     private static final String ROUTING_KEY = "VELOCITY_SAMPLES";
 
@@ -22,14 +23,23 @@ public class Sensor {
     private static int MINUS_DAYS = 0;
 
     public static void main(String[] args) {
-        if (args.length > 0) {
-            SID = args[0];
+        HashMap<String, String> keyValueArgs = convertToKeyValuePair(args);
+        String brokerEndpoint;
+        String sid;
+        String city;
+        String minusDay;
+        if ((brokerEndpoint = keyValueArgs.get("broker-endpoint")) != null) {
+            BROKER_IP = brokerEndpoint.substring(0, brokerEndpoint.indexOf(":"));
+            BROKER_PORT = Integer.parseInt(brokerEndpoint.substring(brokerEndpoint.indexOf(":") + 1));
         }
-        if (args.length > 1) {
-            CITY = args[1];
+        if ((sid = keyValueArgs.get("sid")) != null) {
+            SID = sid;
         }
-        if (args.length > 2) {
-            MINUS_DAYS = Integer.parseInt(args[2]);
+        if ((city = keyValueArgs.get("city")) != null) {
+            CITY = city;
+        }
+        if ((minusDay = keyValueArgs.get("minus-day")) != null) {
+            MINUS_DAYS = Integer.parseInt(minusDay);
         }
         try {
             ConnectionFactory factory = new ConnectionFactory();
@@ -68,5 +78,19 @@ public class Sensor {
     private static String readLine() {
         Scanner scanInput = new Scanner(System.in);
         return scanInput.nextLine();
+    }
+
+    private static HashMap<String, String> convertToKeyValuePair(String[] args) {
+        HashMap<String, String> params = new HashMap<>();
+
+        for (String arg: args) {
+            String[] splitFromEqual = arg.split("=");
+
+            String key = splitFromEqual[0].substring(2);
+            String value = splitFromEqual[1];
+
+            params.put(key, value);
+        }
+        return params;
     }
 }
