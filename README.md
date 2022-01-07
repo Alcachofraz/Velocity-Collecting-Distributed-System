@@ -14,7 +14,7 @@ Inside the **Event Processing Group**, there will be a leader consumer, whose ad
 
 Here is an illustration of the system described:
 
-![CD Final Project drawio](https://user-images.githubusercontent.com/75852333/148568575-dcb4a30a-c125-4d9c-bb4a-bc702d3542dc.png | width=100)
+<img src="https://user-images.githubusercontent.com/75852333/148568575-dcb4a30a-c125-4d9c-bb4a-bc702d3542dc.png" width="520">
 
 ## Configuration steps
 
