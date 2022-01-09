@@ -47,7 +47,11 @@ docker run -d --hostname rabbithost --name rabbitmg \
 -p 5672:5672 -p 15672:15672 rabbitmq:management  
 ```
 
-You can use http://<public VM IP>:15672 to use the RabbitMQ interface. Use guest/guest to log in.  
+You can use:
+```
+http://<public VM IP>:15672 
+```
+To use the RabbitMQ interface. Use guest/guest to log in. 
 
 ### 3) Start Spread  
 
