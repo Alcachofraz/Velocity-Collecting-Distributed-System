@@ -2,7 +2,7 @@
 
 ## Scenario
 
-We have been requested to have multiple sensors in multiple cities collecting velocity samples in hihgways. Velocity values may vary between **0 km/h** and **270 km/h**, and each sample comes with the **sensor ID**, the **city** and the **date**. The values collected should be held in a log file, before being published to the servers that will provide a **User Application** with a fair ammount of possible queries, like the highest velocity ever registered or the average velocity in a certain city.
+We have been requested to have multiple sensors in multiple cities collecting velocity samples in highways. Velocity values may vary between **0 km/h** and **270 km/h**, and each sample comes with the **sensor ID**, the **city** and the **date**. The values collected should be held in a log file, before being published to the servers that will provide a **User Application** with a fair ammount of possible queries, like the highest velocity ever registered or the average velocity in a certain city.
 
 ## Implementation
 
