@@ -13,7 +13,6 @@ public class Server {
 
     private static String DAEMON_IP = "35.197.234.138";
     private static int DAEMON_PORT = 4803;
-    public static final String EVENT_PROCESSING_GROUP_NAME = "EVENT_PROCESSING_GROUP";
     public static final String FRONT_END_GROUP_NAME = "FRONT_END_GROUP";
     public static GroupMember member;
 
