@@ -9,6 +9,8 @@
         <option value="$PROJECT_DIR$/Server/pom.xml" />
         <option value="$PROJECT_DIR$/User/pom.xml" />
         <option value="$PROJECT_DIR$/UserToServerContract/pom.xml" />
+        <option value="$PROJECT_DIR$/RabbitConfigurator/pom.xml" />
+        <option value="$PROJECT_DIR$/Logger/pom.xml" />
       </list>
     </option>
   </component>

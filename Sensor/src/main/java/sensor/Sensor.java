@@ -19,8 +19,9 @@ public class Sensor {
     private static final String ROUTING_KEY = "VELOCITY_SAMPLES";
 
     private static String SID = "1";
-    private static String CITY = "New York";
+    private static String CITY = "Lisbon";
     private static int MINUS_DAYS = 0;
+    private static int PUBLISH_RATE = 2500;
 
     public static void main(String[] args) {
         HashMap<String, String> keyValueArgs = convertToKeyValuePair(args);
@@ -28,9 +29,13 @@ public class Sensor {
         String sid;
         String city;
         String minusDay;
+        String publishRate;
         if ((brokerEndpoint = keyValueArgs.get("broker-endpoint")) != null) {
             BROKER_IP = brokerEndpoint.substring(0, brokerEndpoint.indexOf(":"));
             BROKER_PORT = Integer.parseInt(brokerEndpoint.substring(brokerEndpoint.indexOf(":") + 1));
+        }
+        if ((publishRate = keyValueArgs.get("publish-rate")) != null) {
+            PUBLISH_RATE = Integer.parseInt(publishRate);
         }
         if ((sid = keyValueArgs.get("sid")) != null) {
             SID = sid;
@@ -60,7 +65,7 @@ public class Sensor {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }, 0, 2500, TimeUnit.MILLISECONDS);
+            }, 0, PUBLISH_RATE, TimeUnit.MILLISECONDS);
 
             System.out.println("Type 'exit' to terminate this Sensor.");
             while(!readLine().equals("exit")) {

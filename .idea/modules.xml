@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Configurator/Configurator.iml" filepath="$PROJECT_DIR$/Configurator/Configurator.iml" />
       <module fileurl="file://$PROJECT_DIR$/Consumer/Consumer.iml" filepath="$PROJECT_DIR$/Consumer/Consumer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Logger/Logger.iml" filepath="$PROJECT_DIR$/Logger/Logger.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RabbitConfigurator/RabbitConfigurator.iml" filepath="$PROJECT_DIR$/RabbitConfigurator/RabbitConfigurator.iml" />
       <module fileurl="file://$PROJECT_DIR$/Sensor/Sensor.iml" filepath="$PROJECT_DIR$/Sensor/Sensor.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/SensorDistributedSystem.iml" filepath="$PROJECT_DIR$/.idea/SensorDistributedSystem.iml" />
       <module fileurl="file://$PROJECT_DIR$/Server/Server.iml" filepath="$PROJECT_DIR$/Server/Server.iml" />

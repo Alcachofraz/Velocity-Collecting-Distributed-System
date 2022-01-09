@@ -59,7 +59,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>consumer.Consumer</mainClass>
+                            <mainClass>logger.Logger</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

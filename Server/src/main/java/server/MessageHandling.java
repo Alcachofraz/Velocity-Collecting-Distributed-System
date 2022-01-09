@@ -39,8 +39,8 @@ public class MessageHandling implements BasicMessageListener {
             else if (message.startsWith(Server.member.getName())) {
                 Server.history.add(VelocitySample.fromBytes(message.split(Server.member.getName())[1].getBytes()));
             }
-            else {
-                Server.history.add(VelocitySample.fromBytes(spreadMessage.getData()));
+            else if (message.startsWith("ALL")) {
+                Server.history.add(VelocitySample.fromBytes(message.split("ALL")[1].getBytes()));
             }
         } catch (Exception e) {
             e.printStackTrace();

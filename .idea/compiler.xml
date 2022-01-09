@@ -10,13 +10,15 @@
         <module name="User" />
         <module name="Consumer" />
         <module name="Server" />
-        <module name="Configurator" />
+        <module name="RabbitConfigurator" />
+        <module name="Logger" />
         <module name="Sensor" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Configurator" target="11" />
       <module name="Consumer" target="11" />
+      <module name="Logger" target="11" />
+      <module name="RabbitConfigurator" target="11" />
       <module name="Sensor" target="11" />
       <module name="Server" target="11" />
       <module name="User" target="11" />
