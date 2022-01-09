@@ -61,7 +61,9 @@ Use the following command:
 ### 6) Launch Sensor.jar  
 
 Use the following command:  
-• **java -jar Sensor.jar --broker-endpoint=<broker_ip>:<broker_port> --sid=<sensor_id> --city=<city_name> --minus-day=<days_to_subtract>**  
+´´´
+**java -jar Sensor.jar --broker-endpoint=<broker_ip>:<broker_port> --sid=<sensor_id> --city=<city_name> --minus-day=<days_to_subtract>**  
+´´´
 
 ### 7) Launch User.jar  
 
