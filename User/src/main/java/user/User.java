@@ -5,10 +5,6 @@ import velocity.*;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -22,7 +18,7 @@ public class User {
     public static String serverIP = "localhost";
     public static int serverPort = 5000;
 
-    private static void Menu(VelocityGrpc.VelocityBlockingStub blockingStub, VelocityGrpc.VelocityStub nonBlockingStub) {
+    private static void Menu(VelocityQueriesGrpc.VelocityQueriesBlockingStub blockingStub) {
         String op;
         Scanner scan = new Scanner(System.in);
         do {
@@ -35,7 +31,6 @@ public class User {
             System.out.println(" 4 - Average velocity in a city");
             System.out.println(" 5 - Average velocity in a date");
             System.out.println(" 6 - Number of active consumers");
-            System.out.println(" 7 - Start a new consumer");
             System.out.println("99 - Exit");
             System.out.println();
             System.out.println("Choose an Option?");
@@ -80,10 +75,6 @@ public class User {
                 case "6":
                     System.out.println("There are " + blockingStub.queryNumberOfConsumers(Empty.newBuilder().build()).getValue() + " active consumers.");
                     break;
-                case "7":
-                    System.out.println("Creating a new consumer...");
-                    nonBlockingStub.requestNewConsumer(Empty.newBuilder().build(), new UserObserver());
-                    break;
                 default:
                     System.out.println("Invalid input. Try one of the following:");
                     System.out.println();
@@ -113,10 +104,9 @@ public class User {
                     // needing certificates.
                     .usePlaintext()
                     .build();
-            VelocityGrpc.VelocityBlockingStub blockingStub = VelocityGrpc.newBlockingStub(channel);
-            VelocityGrpc.VelocityStub nonBlockingStub = VelocityGrpc.newStub(channel);
+            VelocityQueriesGrpc.VelocityQueriesBlockingStub blockingStub = VelocityQueriesGrpc.newBlockingStub(channel);
 
-            Menu(blockingStub, nonBlockingStub);
+            Menu(blockingStub);
         } catch (Exception ex) {
             logger.log(Level.SEVERE, "Error:" + ex.getMessage());
         }

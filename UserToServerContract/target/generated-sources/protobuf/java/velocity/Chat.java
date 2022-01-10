@@ -54,20 +54,18 @@ public final class Chat {
       "\001 \001(\t\"\026\n\005Value\022\r\n\005value\030\007 \001(\005\"(\n\006Answer\022" +
       "\036\n\007samples\030\002 \003(\0132\r.forum.Sample\"C\n\006Sampl" +
       "e\022\013\n\003sid\030\003 \001(\t\022\014\n\004city\030\004 \001(\t\022\014\n\004date\030\005 \001" +
-      "(\t\022\020\n\010velocity\030\006 \001(\0052\351\003\n\010Velocity\022=\n\024que" +
-      "ryHighestVelocity\022\026.google.protobuf.Empt" +
-      "y\032\r.forum.Sample\022<\n\023queryLowestVelocity\022" +
-      "\026.google.protobuf.Empty\032\r.forum.Sample\0223" +
-      "\n\025queryVelocitiesInCity\022\013.forum.City\032\r.f" +
-      "orum.Answer\0223\n\025queryVelocitiesInDate\022\013.f" +
-      "orum.Date\032\r.forum.Answer\0227\n\032queryAverage" +
-      "VelocityInCity\022\013.forum.City\032\014.forum.Valu" +
-      "e\0227\n\032queryAverageVelocityInDate\022\013.forum." +
-      "Date\032\014.forum.Value\022>\n\026queryNumberOfConsu" +
-      "mers\022\026.google.protobuf.Empty\032\014.forum.Val" +
-      "ue\022D\n\022requestNewConsumer\022\026.google.protob" +
-      "uf.Empty\032\026.google.protobuf.EmptyB\014\n\010velo" +
-      "cityP\001b\006proto3"
+      "(\t\022\020\n\010velocity\030\006 \001(\0052\252\003\n\017VelocityQueries" +
+      "\022=\n\024queryHighestVelocity\022\026.google.protob" +
+      "uf.Empty\032\r.forum.Sample\022<\n\023queryLowestVe" +
+      "locity\022\026.google.protobuf.Empty\032\r.forum.S" +
+      "ample\0223\n\025queryVelocitiesInCity\022\013.forum.C" +
+      "ity\032\r.forum.Answer\0223\n\025queryVelocitiesInD" +
+      "ate\022\013.forum.Date\032\r.forum.Answer\0227\n\032query" +
+      "AverageVelocityInCity\022\013.forum.City\032\014.for" +
+      "um.Value\0227\n\032queryAverageVelocityInDate\022\013" +
+      ".forum.Date\032\014.forum.Value\022>\n\026queryNumber" +
+      "OfConsumers\022\026.google.protobuf.Empty\032\014.fo" +
+      "rum.ValueB\014\n\010velocityP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,

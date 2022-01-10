@@ -6,7 +6,7 @@ option java_package = "velocity";
 
 package forum;
 
-service Velocity {
+service VelocityQueries {
     rpc queryHighestVelocity(google.protobuf.Empty) returns (Sample);
     rpc queryLowestVelocity(google.protobuf.Empty) returns (Sample);
     rpc queryVelocitiesInCity(City) returns (Answer);
@@ -14,7 +14,6 @@ service Velocity {
     rpc queryAverageVelocityInCity(City) returns (Value);
     rpc queryAverageVelocityInDate(Date) returns (Value);
     rpc queryNumberOfConsumers(google.protobuf.Empty) returns (Value);
-    rpc requestNewConsumer(google.protobuf.Empty) returns (google.protobuf.Empty);
 }
 
 message City {

@@ -1,7 +1,10 @@
 package server;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import io.grpc.ServerBuilder;
 
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
@@ -21,6 +24,8 @@ public class Server {
 
     private static int SERVER_PORT = 5000;
     public static final Logger logger = Logger.getLogger(Server.class.getName());
+
+    public boolean pending = true;
 
     public static void main(String[] args) {
         HashMap<String, String> keyValueArgs = convertToKeyValuePair(args);
@@ -51,6 +56,12 @@ public class Server {
         } catch(Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    public static byte[] getHistoryBytes() {
+        Gson json = new GsonBuilder().create();
+        String jsonString = json.toJson(history);
+        return jsonString.getBytes(StandardCharsets.UTF_8);
     }
 
     private static HashMap<String, String> convertToKeyValuePair(String[] args) {

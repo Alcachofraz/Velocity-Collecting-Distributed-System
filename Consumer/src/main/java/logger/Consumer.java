@@ -48,8 +48,30 @@ public class Consumer {
             Connection connection = factory.newConnection();
             Channel channel = connection.createChannel();
 
-            // Consumer handler to receive messages
+            // Handler with AUTO ACK:
+            /*DeliverCallback deliverCallback = (consumerTag, delivery) -> {
+                try {
+                    String routingKey = delivery.getEnvelope().getRoutingKey();
+                    // Receive VelocitySample in binary and deserialize to Object:
+                    VelocitySample velocitySample = VelocitySample.fromBytes(delivery.getBody());
+                    System.out.println("Message Received [" + consumerTag + "] ["+ routingKey + "]: " + velocitySample);
+                    if (velocitySample.getVelocity() > 120) {
+                        member.sendMessage(FRONT_END_GROUP_NAME, "ALL" + new String(velocitySample.toBytes()));
+                    }
+                } catch (SpreadException e) {
+                    e.printStackTrace();
+                }
+            };*/
+
+            // Handler without AUTO ACK:
             DeliverCallback deliverCallback = (consumerTag, delivery) -> {
+                String message = new String(delivery.getBody(), StandardCharsets.UTF_8);
+                long deliveryTag = delivery.getEnvelope().getDeliveryTag();
+                if (message.equals("nack")) {
+                    System.out.println("NACK");
+                    channel.basicNack(deliveryTag, false, true);
+                }
+                else channel.basicAck(deliveryTag,false);
                 try {
                     String routingKey = delivery.getEnvelope().getRoutingKey();
                     // Receive VelocitySample in binary and deserialize to Object:
@@ -62,6 +84,7 @@ public class Consumer {
                     e.printStackTrace();
                 }
             };
+
             // Consumer handler to receive cancel receiving messages
             CancelCallback cancelCallback = (consumerTag) -> {
                 System.out.println("CANCEL Received: [" + consumerTag + "]");
@@ -69,17 +92,6 @@ public class Consumer {
 
             String newConsumerTag = channel.basicConsume(QUEUE_NAME, true, deliverCallback, cancelCallback);
             System.out.println("Consumer Tag: [" + newConsumerTag + "]");
-
-            // sem autoAck
-            DeliverCallback deliverCallbackWithoutAck = (consumerTag, delivery) -> {
-                String message = new String(delivery.getBody(), StandardCharsets.UTF_8);
-                String routingKey = delivery.getEnvelope().getRoutingKey();
-                long deliveryTag = delivery.getEnvelope().getDeliveryTag();
-                System.out.println("Message Received [" + routingKey + "]: " + message);
-
-                if (message.equals("nack")) channel.basicNack(deliveryTag, false, true);
-                else channel.basicAck(deliveryTag,false);
-            };
 
             //
             // SPREAD:

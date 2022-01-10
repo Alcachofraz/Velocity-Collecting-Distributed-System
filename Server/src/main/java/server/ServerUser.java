@@ -2,12 +2,11 @@ package server;
 
 import com.google.protobuf.Empty;
 import io.grpc.stub.StreamObserver;
-import spread.SpreadException;
 import velocity.*;
 
 import java.util.logging.Level;
 
-class ServerUser extends VelocityGrpc.VelocityImplBase {
+class ServerUser extends VelocityQueriesGrpc.VelocityQueriesImplBase {
     @Override
     public void queryHighestVelocity(Empty request, StreamObserver<Sample> responseObserver) {
         Server.logger.log(Level.INFO, "QUERY: Highest Velocity");
@@ -91,16 +90,6 @@ class ServerUser extends VelocityGrpc.VelocityImplBase {
         Server.logger.log(Level.INFO, "QUERY: Number Of Consumers");
         responseObserver.onNext(Value.newBuilder().setValue(Server.consumers).build());
         responseObserver.onCompleted();
-    }
-
-    @Override
-    public void requestNewConsumer(Empty request, StreamObserver<Empty> responseObserver) {
-        Server.logger.log(Level.INFO, "REQUEST: New Consumer");
-        try {
-            Server.member.sendMessage(Server.EVENT_PROCESSING_GROUP_NAME, "NEW_CONSUMER");
-        } catch (SpreadException e) {
-            e.printStackTrace();
-        }
     }
 
     Sample getSample(VelocitySample sample) {
