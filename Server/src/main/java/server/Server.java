@@ -1,5 +1,6 @@
 package server;
 
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.grpc.ServerBuilder;
@@ -7,7 +8,6 @@ import io.grpc.ServerBuilder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
@@ -19,13 +19,13 @@ public class Server {
     public static final String FRONT_END_GROUP_NAME = "FRONT_END_GROUP";
     public static GroupMember member;
 
-    public static List<VelocitySample> history = new ArrayList<>();
+    public static VelocitySampleList history = new VelocitySampleList();
     public static int consumers = 0;
 
     private static int SERVER_PORT = 5000;
     public static final Logger logger = Logger.getLogger(Server.class.getName());
 
-    public boolean pending = true;
+    public static boolean pending = true;
 
     public static void main(String[] args) {
         HashMap<String, String> keyValueArgs = convertToKeyValuePair(args);
@@ -62,6 +62,12 @@ public class Server {
         Gson json = new GsonBuilder().create();
         String jsonString = json.toJson(history);
         return jsonString.getBytes(StandardCharsets.UTF_8);
+    }
+
+    public static VelocitySampleList fromHistoryBytes(byte[] bytes) {
+        Gson json = new GsonBuilder().create();
+        String jsonString = new String(bytes, StandardCharsets.UTF_8);
+        return json.fromJson(jsonString, VelocitySampleList.class);
     }
 
     private static HashMap<String, String> convertToKeyValuePair(String[] args) {

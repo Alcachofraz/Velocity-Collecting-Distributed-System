@@ -1,10 +1,6 @@
 package server;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import spread.*;
-
-import java.nio.charset.StandardCharsets;
 
 public class MessageHandling implements BasicMessageListener {
     private SpreadConnection connection;
@@ -24,30 +20,31 @@ public class MessageHandling implements BasicMessageListener {
                 Server.member.setLeader(leader.equals(Server.member.getName()));
                 if (info.isCausedByJoin()) {
                     System.out.println("JOIN of " + info.getJoined());
-                    if (leader.equals(Server.member.getName())) {
-                        System.out.println("Sending history to newest server...");
-
-                    }
                 } else if (info.isCausedByLeave()) {
                     System.out.println("LEAVE of " + info.getLeft());
 
                 } else if (info.isCausedByDisconnect()) {
                     System.out.println("DISCONNECT of " + info.getDisconnected());
                 }
-            }
-            else if (message.startsWith("CONSUMERS") && Server.member.isLeader()) {
-                Server.consumers = Integer.parseInt(message.split(" ")[1]);
-            }
-            else if (message.startsWith("REQUESTING_HISTORY")) {
-                if (Server.member.isLeader()) {
-                    Server.member.sendMessage(Server.FRONT_END_GROUP_NAME, message.split("REQUESTING_HISTORY")[1] + new String(Server.getHistoryBytes()));
+                if (leader.equals(Server.member.getName())) {
+                    System.out.println("I'm the new leader!");
                 }
             }
-            else if (message.startsWith(Server.member.getName())) {
-                Server.history.add(VelocitySample.fromBytes(message.split(Server.member.getName())[1].getBytes()));
+            else if (message.startsWith("CONSUMERS")) {
+                Server.consumers = Integer.parseInt(message.replaceFirst("CONSUMERS", ""));
             }
-            else if (message.startsWith("ALL")) {
-                Server.history.add(VelocitySample.fromBytes(message.split("ALL")[1].getBytes()));
+            else if (message.startsWith("REQUEST") && Server.member.isLeader()) {
+                Server.member.sendMessage(Server.FRONT_END_GROUP_NAME, "ANSWER" + new String(Server.getHistoryBytes()));
+            }
+            else if (message.startsWith("ANSWER") && Server.pending) {
+                Server.history = Server.fromHistoryBytes(message.replaceFirst("ANSWER", "").getBytes());
+                Server.pending = false;
+            }
+            else if (message.startsWith("ALL") && !Server.pending) {
+                Server.history.add(VelocitySample.fromBytes(message.replaceFirst("ALL", "").getBytes()));
+            }
+            if (Server.pending) {
+                Server.member.sendMessage(Server.FRONT_END_GROUP_NAME, "REQUEST");
             }
         } catch (Exception e) {
             e.printStackTrace();

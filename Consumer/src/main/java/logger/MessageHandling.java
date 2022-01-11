@@ -28,11 +28,8 @@ public class MessageHandling implements BasicMessageListener {
                 // Change in membership! If leader, warn Front-End Group:
                 if (Consumer.member.isLeader()) {
                     System.out.println("Sending current Event-Processing Group membership to Front-End Group...");
-                    Consumer.member.sendMessage(Consumer.FRONT_END_GROUP_NAME, "CONSUMERS: " + members.length);
+                    Consumer.member.sendMessage(Consumer.FRONT_END_GROUP_NAME, "CONSUMERS" + members.length);
                 }
-            } else if (message.equals("NEW_CONSUMER") && Consumer.member.isLeader()) {
-                // TODO: Initiate a new Consumer
-                //Runtime.getRuntime().exec("java -jar Consumer.jar");
             }
         } catch (Exception e) {
             e.printStackTrace();
