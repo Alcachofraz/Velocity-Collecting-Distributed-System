@@ -1,4 +1,4 @@
-package logger;
+package consumer;
 
 import spread.SpreadConnection;
 import spread.SpreadException;

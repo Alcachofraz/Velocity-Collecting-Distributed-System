@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class RabbitConfigurator {
 
-    static String BROKER_IP = "35.197.234.138";
+    static String BROKER_IP = "35.197.247.130";
     static int BROKER_PORT = 5672;
 
     static final String QUEUE_NAME = "VELOCITY_QUEUE";

@@ -4,17 +4,15 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.grpc.ServerBuilder;
-
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.HashMap;
-import java.util.List;
 import java.util.logging.Logger;
 
 public class Server {
 
-    private static String DAEMON_IP = "35.197.234.138";
+    private static String DAEMON_IP = "35.197.247.130";
     private static int DAEMON_PORT = 4803;
     public static final String FRONT_END_GROUP_NAME = "FRONT_END_GROUP";
     public static GroupMember member;

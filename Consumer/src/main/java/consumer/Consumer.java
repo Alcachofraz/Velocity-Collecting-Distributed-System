@@ -1,4 +1,4 @@
-package logger;
+package consumer;
 
 import com.rabbitmq.client.*;
 import spread.SpreadException;
@@ -11,13 +11,13 @@ import java.util.Scanner;
 
 public class Consumer {
 
-    static String BROKER_IP = "35.197.234.138";
+    static String BROKER_IP = "35.197.247.130";
     static int BROKER_PORT = 5672;
     static final String QUEUE_NAME = "VELOCITY_QUEUE";
     private static final String EXCHANGE_NAME = "VELOCITY_SAMPLES";
     private static final String ROUTING_KEY = "VELOCITY_SAMPLES";
 
-    private static String DAEMON_IP = "35.197.234.138";
+    private static String DAEMON_IP = "35.197.247.130";
     private static int DAEMON_PORT = 4803;
     public static final String EVENT_PROCESSING_GROUP_NAME = "EVENT_PROCESSING_GROUP";
     public static final String FRONT_END_GROUP_NAME = "FRONT_END_GROUP";
@@ -49,29 +49,7 @@ public class Consumer {
             Channel channel = connection.createChannel();
 
             // Handler with AUTO ACK:
-            /*DeliverCallback deliverCallback = (consumerTag, delivery) -> {
-                try {
-                    String routingKey = delivery.getEnvelope().getRoutingKey();
-                    // Receive VelocitySample in binary and deserialize to Object:
-                    VelocitySample velocitySample = VelocitySample.fromBytes(delivery.getBody());
-                    System.out.println("Message Received [" + consumerTag + "] ["+ routingKey + "]: " + velocitySample);
-                    if (velocitySample.getVelocity() > 120) {
-                        member.sendMessage(FRONT_END_GROUP_NAME, "ALL" + new String(velocitySample.toBytes()));
-                    }
-                } catch (SpreadException e) {
-                    e.printStackTrace();
-                }
-            };*/
-
-            // Handler without AUTO ACK:
             DeliverCallback deliverCallback = (consumerTag, delivery) -> {
-                String message = new String(delivery.getBody(), StandardCharsets.UTF_8);
-                long deliveryTag = delivery.getEnvelope().getDeliveryTag();
-                if (message.equals("nack")) {
-                    System.out.println("NACK");
-                    channel.basicNack(deliveryTag, false, true);
-                }
-                else channel.basicAck(deliveryTag,false);
                 try {
                     String routingKey = delivery.getEnvelope().getRoutingKey();
                     // Receive VelocitySample in binary and deserialize to Object:
@@ -84,6 +62,28 @@ public class Consumer {
                     e.printStackTrace();
                 }
             };
+
+            // Handler without AUTO ACK:
+            /*DeliverCallback deliverCallback = (consumerTag, delivery) -> {
+                String message = new String(delivery.getBody(), StandardCharsets.UTF_8);
+                long deliveryTag = delivery.getEnvelope().getDeliveryTag();
+                if (message.equals("nack")) {
+                    System.out.println("NACK");
+                    channel.basicNack(deliveryTag, false, true);
+                }
+                else channel.basicAck(deliveryTag,true);
+                try {
+                    String routingKey = delivery.getEnvelope().getRoutingKey();
+                    // Receive VelocitySample in binary and deserialize to Object:
+                    VelocitySample velocitySample = VelocitySample.fromBytes(delivery.getBody());
+                    System.out.println("Message Received [" + consumerTag + "] ["+ routingKey + "]: " + velocitySample);
+                    if (velocitySample.getVelocity() > 120) {
+                        member.sendMessage(FRONT_END_GROUP_NAME, "ALL" + new String(velocitySample.toBytes()));
+                    }
+                } catch (SpreadException e) {
+                    e.printStackTrace();
+                }
+            };*/
 
             // Consumer handler to receive cancel receiving messages
             CancelCallback cancelCallback = (consumerTag) -> {

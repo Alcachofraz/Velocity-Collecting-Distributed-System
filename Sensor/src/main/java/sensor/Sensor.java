@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Sensor {
 
-    private static String BROKER_IP = "35.197.234.138";
+    private static String BROKER_IP = "35.197.247.130";
     private static int BROKER_PORT = 5672;
     private static final String EXCHANGE_NAME = "VELOCITY_SAMPLES";
     private static final String ROUTING_KEY = "VELOCITY_SAMPLES";

@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class Logger {
 
-    static String BROKER_IP = "35.197.234.138";
+    static String BROKER_IP = "35.197.247.130";
     static int BROKER_PORT = 5672;
     static final String QUEUE_NAME = "VELOCITY_QUEUE_LOG";
     private static final String EXCHANGE_NAME = "VELOCITY_SAMPLES";
@@ -40,40 +40,43 @@ public class Logger {
             if (log.createNewFile()) {
                 System.out.println("Created file: " + log.getName());
             }
-            FileWriter writer = new FileWriter(log);
 
             // Handler with AUTO ACK:
-            /*DeliverCallback deliverCallback = (consumerTag, delivery) -> {
+            DeliverCallback deliverCallback = (consumerTag, delivery) -> {
                 try {
                     String routingKey = delivery.getEnvelope().getRoutingKey();
                     // Receive VelocitySample in binary and deserialize to Object:
                     VelocitySample velocitySample = VelocitySample.fromBytes(delivery.getBody());
                     System.out.println("Message Received [" + consumerTag + "] ["+ routingKey + "]: " + velocitySample);
+                    FileWriter writer = new FileWriter(log);
                     writer.append(velocitySample.toString()).append("\n");
+                    writer.close();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            };*/
+            };
 
             // Handler without AUTO ACK:
-            DeliverCallback deliverCallback = (consumerTag, delivery) -> {
+            /*DeliverCallback deliverCallback = (consumerTag, delivery) -> {
                 String message = new String(delivery.getBody(), StandardCharsets.UTF_8);
                 long deliveryTag = delivery.getEnvelope().getDeliveryTag();
+                try {
+                    String routingKey = delivery.getEnvelope().getRoutingKey();
+                    // Receive VelocitySample in binary and deserialize to Object:
+                    VelocitySample velocitySample = VelocitySample.fromBytes(delivery.getBody());
+                    System.out.println("Message Received [" + consumerTag + "] ["+ routingKey + "]: " + velocitySample);
+                    FileWriter writer = new FileWriter(log);
+                    writer.append(velocitySample.toString()).append("\n");
+                    writer.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 if (message.equals("nack")) {
                     System.out.println("NACK");
                     channel.basicNack(deliveryTag, false, true);
                 }
                 else channel.basicAck(deliveryTag,false);
-                try {
-                    String routingKey = delivery.getEnvelope().getRoutingKey();
-                    // Receive VelocitySample in binary and deserialize to Object:
-                    VelocitySample velocitySample = VelocitySample.fromBytes(delivery.getBody());
-                    System.out.println("Message Received [" + consumerTag + "] ["+ routingKey + "]: " + velocitySample);
-                    writer.append(velocitySample.toString()).append("\n");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            };
+            };*/
 
             // Consumer handler to receive cancel receiving messages
             CancelCallback cancelCallback = (consumerTag) -> {
@@ -87,7 +90,6 @@ public class Logger {
                 System.out.println("Type 'exit' to terminate this Logger.");
             }
 
-            writer.close();
             channel.close();
             connection.close();
         } catch(Exception ex) {
