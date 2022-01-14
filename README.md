@@ -27,8 +27,7 @@ Follow the instructions in the PDF **Spread Install Instructions in VM GCP CentO
 Please, refer to [this](https://docs.docker.com/engine/install/centos/) link. Use the following commands:  
 ```
 sudo yum install -y yum-utils  
-sudo yum-config-manager --add-repo \  
-https://download.docker.com/linux/centos/docker-ce.repo  
+sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo  
 sudo yum install docker-ce docker-ce-cli containerd.io  
 sudo systemctl start docker  
 sudo docker run hello-world  
@@ -43,8 +42,7 @@ sudo newgrp docker
 To run:  
 ```
 docker run fedora cat /etc/os-release  
-docker run -d --hostname rabbithost --name rabbitmg \  
--p 5672:5672 -p 15672:15672 rabbitmq:management  
+docker run -d --hostname rabbithost --name rabbitmg -p 5672:5672 -p 15672:15672 rabbitmq:management  
 ```
 
 You can use:
@@ -74,16 +72,23 @@ Use the following command:
 java -jar Consumer.jar --daemon-endpoint=<daemon_ip>:<daemon_port> --broker-endpoint=<broker_ip>:<broker_port>  
 ```
 
-### 6) Launch Sensor.jar  
+### 6) Launch Logger.jar  
 
 Use the following command:  
 ```
-**java -jar Sensor.jar --broker-endpoint=<broker_ip>:<broker_port> --publish-rate=<publish_rate_in_ms> --sid=<sensor_id> --city=<city_name> --minus-day=<days_to_subtract>  
+java -jar Logger.jar --broker-endpoint=<broker_ip>:<broker_port>  
 ```
 
-### 7) Launch User.jar  
+### 7) Launch Sensor.jar  
+
+Use the following command:  
+```
+java -jar Sensor.jar --broker-endpoint=<broker_ip>:<broker_port> --publish-rate=<publish_rate_in_ms> --sid=<sensor_id> --city=<city_name> --minus-day=<days_to_subtract>  
+```
+
+### 8) Launch User.jar  
 
 Use the following command: 
 ```
-**java -jar User.jar --endpoint=<server_ip>:<server_port>**  
+java -jar User.jar --endpoint=<server_ip>:<server_port>  
 ```
