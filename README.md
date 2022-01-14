@@ -83,12 +83,12 @@ java -jar Logger.jar --broker-endpoint=<broker_ip>:<broker_port>
 
 Use the following command:  
 ```
-**java -jar Sensor.jar --broker-endpoint=<broker_ip>:<broker_port> --publish-rate=<publish_rate_in_ms> --sid=<sensor_id> --city=<city_name> --minus-day=<days_to_subtract>  
+java -jar Sensor.jar --broker-endpoint=<broker_ip>:<broker_port> --publish-rate=<publish_rate_in_ms> --sid=<sensor_id> --city=<city_name> --minus-day=<days_to_subtract>  
 ```
 
 ### 8) Launch User.jar  
 
 Use the following command: 
 ```
-**java -jar User.jar --endpoint=<server_ip>:<server_port>**  
+java -jar User.jar --endpoint=<server_ip>:<server_port>  
 ```
