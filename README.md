@@ -72,14 +72,21 @@ Use the following command:
 java -jar Consumer.jar --daemon-endpoint=<daemon_ip>:<daemon_port> --broker-endpoint=<broker_ip>:<broker_port>  
 ```
 
-### 6) Launch Sensor.jar  
+### 6) Launch Logger.jar  
+
+Use the following command:  
+```
+java -jar Logger.jar --broker-endpoint=<broker_ip>:<broker_port>  
+```
+
+### 7) Launch Sensor.jar  
 
 Use the following command:  
 ```
 **java -jar Sensor.jar --broker-endpoint=<broker_ip>:<broker_port> --publish-rate=<publish_rate_in_ms> --sid=<sensor_id> --city=<city_name> --minus-day=<days_to_subtract>  
 ```
 
-### 7) Launch User.jar  
+### 8) Launch User.jar  
 
 Use the following command: 
 ```
