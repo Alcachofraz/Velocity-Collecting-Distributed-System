@@ -27,8 +27,7 @@ Follow the instructions in the PDF **Spread Install Instructions in VM GCP CentO
 Please, refer to [this](https://docs.docker.com/engine/install/centos/) link. Use the following commands:  
 ```
 sudo yum install -y yum-utils  
-sudo yum-config-manager --add-repo \  
-https://download.docker.com/linux/centos/docker-ce.repo  
+sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo  
 sudo yum install docker-ce docker-ce-cli containerd.io  
 sudo systemctl start docker  
 sudo docker run hello-world  
@@ -43,8 +42,7 @@ sudo newgrp docker
 To run:  
 ```
 docker run fedora cat /etc/os-release  
-docker run -d --hostname rabbithost --name rabbitmg \  
--p 5672:5672 -p 15672:15672 rabbitmq:management  
+docker run -d --hostname rabbithost --name rabbitmg -p 5672:5672 -p 15672:15672 rabbitmq:management  
 ```
 
 You can use:
