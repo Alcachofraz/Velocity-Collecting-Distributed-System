@@ -2,6 +2,9 @@ package consumer;
 
 import spread.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class MessageHandling implements BasicMessageListener {
     private SpreadConnection connection;
 
@@ -12,11 +15,16 @@ public class MessageHandling implements BasicMessageListener {
     @Override
     public void messageReceived(SpreadMessage spreadMessage) {
         try {
-            String message = new String(spreadMessage.getData());
             if (spreadMessage.isMembership()) {
                 MembershipInfo info = spreadMessage.getMembershipInfo();
-                SpreadGroup[] members = info.getMembers();
-                String leader = members[0].toString().split("#")[1]; // Get name between the first two "#"
+                SpreadGroup[] membersSpreadGroup = info.getMembers();
+                ArrayList<String> members = new ArrayList<>();
+                for (SpreadGroup member : membersSpreadGroup) {
+                    members.add(member.toString());
+                }
+                Collections.sort(members);
+                String leader = members.get(0).split("#")[1];
+                Consumer.member.setLeader(leader.equals(Consumer.member.getName()));
                 if (info.isCausedByJoin()) {
                     System.out.println("JOIN of " + info.getJoined());
                 } else if (info.isCausedByLeave()) {
@@ -24,11 +32,10 @@ public class MessageHandling implements BasicMessageListener {
                 } else if (info.isCausedByDisconnect()) {
                     System.out.println("DISCONNECT of " + info.getDisconnected());
                 }
-                Consumer.member.setLeader(leader.equals(Consumer.member.getName()));
                 // Change in membership! If leader, warn Front-End Group:
                 if (Consumer.member.isLeader()) {
                     System.out.println("Sending current Event-Processing Group membership to Front-End Group...");
-                    Consumer.member.sendMessage(Consumer.FRONT_END_GROUP_NAME, "CONSUMERS" + members.length);
+                    Consumer.member.sendMessage(Consumer.FRONT_END_GROUP_NAME, "CONSUMERS" + members.size());
                 }
             }
         } catch (Exception e) {

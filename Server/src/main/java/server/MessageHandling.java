@@ -2,6 +2,9 @@ package server;
 
 import spread.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class MessageHandling implements BasicMessageListener {
     private SpreadConnection connection;
 
@@ -15,8 +18,13 @@ public class MessageHandling implements BasicMessageListener {
             String message = new String(spreadMessage.getData());
             if (spreadMessage.isMembership()) {
                 MembershipInfo info = spreadMessage.getMembershipInfo();
-                SpreadGroup[] members = info.getMembers();
-                String leader = members[0].toString().split("#")[1]; // Get name between the first two "#"
+                SpreadGroup[] membersSpreadGroup = info.getMembers();
+                ArrayList<String> members = new ArrayList<>();
+                for (SpreadGroup member : membersSpreadGroup) {
+                    members.add(member.toString());
+                }
+                Collections.sort(members);
+                String leader = members.get(0).split("#")[1]; // Get name between the first two "#"
                 Server.member.setLeader(leader.equals(Server.member.getName()));
                 if (info.isCausedByJoin()) {
                     System.out.println("JOIN of " + info.getJoined());
@@ -34,10 +42,12 @@ public class MessageHandling implements BasicMessageListener {
                 Server.consumers = Integer.parseInt(message.replaceFirst("CONSUMERS", ""));
             }
             else if (message.startsWith("REQUEST") && Server.member.isLeader()) {
-                Server.member.sendMessage(Server.FRONT_END_GROUP_NAME, "ANSWER" + new String(Server.getHistoryBytes()));
+                Server.member.sendMessage(Server.FRONT_END_GROUP_NAME, "ANSWER" + new String(Server.getHistoryBytes()) + "CONSUMERS" + Server.consumers);
             }
             else if (message.startsWith("ANSWER") && Server.pending) {
-                Server.history = Server.fromHistoryBytes(message.replaceFirst("ANSWER", "").getBytes());
+                String[] aux = message.replaceFirst("ANSWER", "").split("CONSUMERS");
+                Server.history = Server.fromHistoryBytes(aux[0].getBytes());
+                Server.consumers = Integer.parseInt(aux[1]);
                 Server.pending = false;
             }
             else if (message.startsWith("ALL") && !Server.pending) {

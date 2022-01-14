@@ -48,7 +48,7 @@ public class Logger {
                     // Receive VelocitySample in binary and deserialize to Object:
                     VelocitySample velocitySample = VelocitySample.fromBytes(delivery.getBody());
                     System.out.println("Message Received [" + consumerTag + "] ["+ routingKey + "]: " + velocitySample);
-                    FileWriter writer = new FileWriter(log);
+                    FileWriter writer = new FileWriter(log, true);
                     writer.append(velocitySample.toString()).append("\n");
                     writer.close();
                 } catch (Exception e) {
