@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 public class Server {
 
-    private static String DAEMON_IP = "35.197.247.130";
+    private static String DAEMON_IP = "34.89.108.254";
     private static int DAEMON_PORT = 4803;
     public static final String FRONT_END_GROUP_NAME = "FRONT_END_GROUP";
     public static GroupMember member;

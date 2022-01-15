@@ -51,6 +51,7 @@ class ServerUser extends VelocityQueriesGrpc.VelocityQueriesImplBase {
         for (VelocitySample sample : Server.history) {
             if (sample.getDate().equals(request.getDate())) answer.addSamples(getSample(sample));
         }
+        System.out.println(answer.getSamplesList().size());
         responseObserver.onNext(answer.build());
         responseObserver.onCompleted();
     }
